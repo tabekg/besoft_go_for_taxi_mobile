@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HistoryTab extends StatelessWidget {
+class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,15 +11,6 @@ class HistoryTab extends StatelessWidget {
 
 class HistoryTabPage extends StatefulWidget {
   HistoryTabPage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -62,14 +53,28 @@ class _HistoryTabPageState extends State<HistoryTabPage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '!!!:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Container(
+              width: double.infinity,
+              child: Card(
+                  child: Padding(
+                    child: Column(
+                      children: [
+                        Text(
+                          'History',
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                        Text(
+                            'dfgdfg'
+                        ),
+                      ],
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                  )
+              ),
             ),
           ],
         ),
