@@ -35,6 +35,9 @@ class _HistoryTabPageState extends State<HistoryTabPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Besoft Go для таксистов'),
+      ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -59,22 +62,19 @@ class _HistoryTabPageState extends State<HistoryTabPage> {
               width: double.infinity,
               child: Card(
                   child: Padding(
-                    child: Column(
-                      children: [
-                        Text(
-                          'History',
-                          style: TextStyle(
-                            fontSize: 24,
-                          ),
-                        ),
-                        Text(
-                            'dfgdfg'
-                        ),
-                      ],
+                child: Column(
+                  children: [
+                    Text(
+                      'History',
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
                     ),
-                    padding: EdgeInsets.all(8.0),
-                  )
-              ),
+                    Text('dfgdfg'),
+                  ],
+                ),
+                padding: EdgeInsets.all(8.0),
+              )),
             ),
           ],
         ),
