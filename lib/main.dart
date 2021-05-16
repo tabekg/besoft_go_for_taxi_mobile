@@ -42,13 +42,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+final List<Widget> tabs = [
+  HomeTabPage(),
+  HistoryTabPage(),
+];
+
 class _HomePageState extends State<HomePage> {
   int _currentTab = 0;
-
-  final List<Widget> tabs = [
-    HomeTabPage(),
-    HistoryTabPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {

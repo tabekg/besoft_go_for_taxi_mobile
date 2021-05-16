@@ -1,12 +1,14 @@
-import 'package:besoft_go_for_taxi/utils/hex.dart';
 import 'package:flutter/material.dart';
+
+final List<String> entries = <String>[
+  '0777 777 777',
+  '0777 111 222',
+];
 
 class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: HomeTabPage(),
-    );
+    return HomeTabPage();
   }
 }
 
@@ -20,17 +22,27 @@ class HomeTabPage extends StatefulWidget {
 }
 
 class _HomeTabPageState extends State<HomeTabPage> {
-  int _counter = 0;
-  int initialIndex = 0;
-  final isSelected = <bool>[false, false, false];
+  int _busyPlace = entries.length;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  //final isSelected = <bool>[false, false, false];
+
+  void _incrementBusyPlace() {
+    if (_busyPlace < 7) {
+      setState(() {
+        _busyPlace++;
+      });
+    }
   }
 
-  List<bool> _isSelected = [false, false];
+  void _decrementBusyPlace() {
+    if (_busyPlace > entries.length) {
+      setState(() {
+        _busyPlace--;
+      });
+    }
+  }
+
+  //List<bool> _isSelected = [false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +52,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.fromLTRB(8, 8, 8, 18),
             child: Column(
               children: <Widget>[
                 Container(
@@ -48,7 +60,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Apple Color Emoji',
+                      'Asan Usonov',
                       style: TextStyle(
                         fontSize: 18,
                         color: Color.fromRGBO(255, 255, 255, 0.8),
@@ -72,12 +84,12 @@ class _HomeTabPageState extends State<HomeTabPage> {
                             margin: EdgeInsets.only(left: 8),
                             child: Row(
                               children: [
-                                Text('4',
+                                Text(this._busyPlace.toString(),
                                     style: TextStyle(
                                       fontSize: 48,
                                       color: Colors.white,
                                     )),
-                                Text('/9',
+                                Text('/7',
                                     style: TextStyle(
                                       fontSize: 48,
                                       color: Color.fromRGBO(255, 255, 255, 0.6),
@@ -99,12 +111,21 @@ class _HomeTabPageState extends State<HomeTabPage> {
                               color: Colors.white,
                               child: Material(
                                 child: InkWell(
-                                  onTap: () {
-                                    print('+');
-                                  },
+                                  splashColor: this._busyPlace == 7
+                                      ? Colors.transparent
+                                      : null,
+                                  hoverColor: this._busyPlace == 7
+                                      ? Colors.transparent
+                                      : null,
+                                  highlightColor: this._busyPlace == 7
+                                      ? Colors.transparent
+                                      : null,
+                                  onTap: _incrementBusyPlace,
                                   child: Icon(
                                     Icons.add,
-                                    color: HexColor('3F763E'),
+                                    color: this._busyPlace == 7
+                                        ? Colors.grey
+                                        : Colors.blueAccent,
                                     size: 40,
                                   ),
                                 ),
@@ -125,12 +146,22 @@ class _HomeTabPageState extends State<HomeTabPage> {
                                 color: Colors.white,
                                 child: Material(
                                   child: InkWell(
-                                    onTap: () {
-                                      print('-');
-                                    },
+                                    splashColor: this._busyPlace == entries.length
+                                        ? Colors.transparent
+                                        : null,
+                                    hoverColor: this._busyPlace == entries.length
+                                        ? Colors.transparent
+                                        : null,
+                                    highlightColor: this._busyPlace == entries.length
+                                        ? Colors.transparent
+                                        : null,
+                                    onTap: _decrementBusyPlace,
                                     child: Icon(
                                       Icons.remove,
-                                      color: HexColor('3F763E'),
+//                                      color: HexColor('3F763E'),
+                                      color: this._busyPlace == entries.length
+                                          ? Colors.grey
+                                          : Colors.blueAccent,
                                       size: 40,
                                     ),
                                   ),
@@ -145,18 +176,18 @@ class _HomeTabPageState extends State<HomeTabPage> {
               ],
             ),
           ),
-          Expanded(child: Clients()),
+          Expanded(child: Passengers()),
         ],
       ),
     );
   }
 }
 
-class Clients extends StatelessWidget {
+class Passengers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0),
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.only(
@@ -164,74 +195,129 @@ class Clients extends StatelessWidget {
           topLeft: Radius.circular(40),
         ),
       ),
-      child: Column(
-        children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Пассажиры',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(0, 0, 0, 0.5),
-                    )),
-              )),
-          ClientItem(),
-          ClientItem(),
-          ClientItem(),
-        ],
+      child: Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.fromLTRB(8, 15, 8, 10),
+          itemCount: entries.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Пассажиры',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(0, 0, 0, 0.5),
+                      )),
+                ),
+              );
+            }
+            return PassengerItem(
+              phoneNumber: entries[index - 1],
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class ClientItem extends StatelessWidget {
+class PassengerItem extends StatelessWidget {
+  PassengerItem({Key key, this.phoneNumber}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String phoneNumber;
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _showDeleteConfirmAlert() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Подтвердите'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Вы точно хотите удалить?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Да'),
+                onPressed: () {
+                  print('Confirmed');
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('Нет'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Card(
-      elevation: 5,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
         child: new InkWell(
-            onTap: () {
-              print("tapped");
-            },
-            child: Container(
-              margin: const EdgeInsets.all(14.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Icon(
-                      Icons.call,
-                      size: 30,
-                    ),
+          onTap: () {
+            print("tapped");
+          },
+          child: Container(
+            margin: const EdgeInsets.all(14.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Icon(
+                    Icons.call,
+                    size: 30,
                   ),
-                  Expanded(
-                    flex: 8,
-                    child: Text("0777 777 777", style: TextStyle(fontSize: 25)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.delete,
-                          size: 30,
-                          color: Colors.red,
-                        ),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Text(this.phoneNumber, style: TextStyle(fontSize: 25)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    child: InkWell(
+                      onTap: _showDeleteConfirmAlert,
+                      child: Icon(
+                        Icons.delete,
+                        size: 30,
+                        color: Colors.red,
                       ),
                     ),
                   ),
-                ],
-              ),
-            )),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
